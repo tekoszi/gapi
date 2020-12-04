@@ -11,7 +11,7 @@ def index():
     return 'Hello World'
 
 @app.route("/add")
-def index():
+def add():
     # with open(os.path.dirname(app.root_path) +'\README.md', 'r') as file:
     #     content = file.read()
     #     return markdown.markdown(content)
