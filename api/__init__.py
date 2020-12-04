@@ -47,8 +47,8 @@ class Geo(Resource):
     def get(self, *args, **kwargs):
         parser = reqparse.RequestParser()
         parser.add_argument('auth', required=True)
-        args = parser.parse_args()
-        if self.authVerify(args['auth']):
+        arguments = parser.parse_args()
+        if self.authVerify(arguments['auth']):
             conn, c = self.dbConnect()
             c.execute("SELECT * FROM geo")
 
@@ -65,8 +65,8 @@ class Geo(Resource):
         parser.add_argument('method', required=True)
         parser.add_argument('auth', required=True)
         args = parser.parse_args()
-        if super().authVerify(args['auth']):
-            conn, c = super().dbConnect()
+        if self.authVerify(args['auth']):
+            conn, c = self.dbConnect()
             c.execute('SELECT * FROM geo WHERE ip=?', (args['ip'],))
 
             if args['method'] == 'manual':
