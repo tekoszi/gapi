@@ -38,8 +38,10 @@ class Geo(Resource):
         token = jwt.encode(eval(auth), key='secret', algorithm='HS256').decode("utf-8")
         c.execute('SELECT * FROM auth WHERE token=?', (token,))
         if c.fetchall():
+
             return True
         else:
+
             return False
 
     def get(self):
@@ -52,6 +54,7 @@ class Geo(Resource):
 
             return {'message': 'Success', 'data': c.fetchall()}
         else:
+
             return {'message': 'Failure', 'data': 'Unauthorized'}
 
     def post(self):
@@ -99,6 +102,7 @@ class Geo(Resource):
 
                     return {'message': 'Successfully updated the record with automatic data', 'data': updateData}
         else:
+
             return {'message': 'Failure', 'data': 'Unauthorized'}
 
 
@@ -114,9 +118,24 @@ class Geo(Resource):
 
             return {'message': 'Successfully removed row', 'data': args['ip']}
         else:
+
             return {'message': 'Failure', 'data': 'Unauthorized'}
 
 class IpAddress(Resource):
-    ...
+    def get(self, identifier):
+        parser = reqparse.RequestParser()
+        parser.add_argument('auth', required=True)
+        args = parser.parse_args()
+        if self.authVerify(args['auth']):
+            conn, c = self.dbConnect()
+            c.execute('SELECT * FROM geo WHERE ip=?', (identifier,))
+            if c.fetchone():
+                return {'message': 'Success', 'data': c.fetchone()}
+            else:
+                return {'message': 'Failure', 'data': 'record not found'}
+
+        else:
+
+            return {'message': 'Failure', 'data': 'Unauthorized'}
 
 api.add_resource(Geo, '/geo')
