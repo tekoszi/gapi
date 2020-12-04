@@ -82,7 +82,7 @@ class Geo(Resource):
         parser.add_argument('ip', required=True)
         args = parser.parse_args()
         conn, c = self.dbConnect()
-        c.execute('DELETE * FROM geo WHERE ip=?', (args['ip'],))
+        c.execute('DELETE FROM geo WHERE ip=?', (args['ip'],))
         conn.commit()
         return {'message': 'Successfully removed row', 'data': args['ip']}
 
