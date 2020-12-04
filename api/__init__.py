@@ -57,11 +57,13 @@ class Geo(Resource):
             geoData = (args['ip'], args['location'], args['symbol'])
             c.execute('INSERT INTO geo VALUES (?,?,?)', geoData)
             conn.commit()
+            return {'message': 'Successfully added new data', 'data': args}
         else:
             updateData = (args['location'], args['symbol'], args['ip'])
             c.execute("UPDATE geo SET location=?, symbol=? WHERE ip=?", updateData)
             conn.commit()
-        return {'message': 'Successfully added new data', 'data': args}
+            return {'message': 'Successfully updated the record', 'data': args}
+
 
 api.add_resource(Geo,'/geo')
 
