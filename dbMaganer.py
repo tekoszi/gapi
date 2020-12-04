@@ -7,7 +7,7 @@ c = conn.cursor()
 # c.execute("INSERT INTO geo VALUES ('0.0.0.2','Poland','PL')")
 # c.execute("INSERT INTO geo VALUES ('0.0.0.3','Poland','PL')")
 #
-ip = ('0.0.0.2',)
+ip = ('0.0.0.5',)
 
 c.execute('SELECT * FROM geo WHERE ip=?', ip)
 args = {
@@ -16,10 +16,10 @@ args = {
     "symbol": "GER"
 }
 updateData = (args['location'], args['symbol'], args['ip'])
-if len(c.fetchall()) == 0:
-    ...
+if c.fetchall():
+    print('someting')
 else:
-
+    print('nothing')
 
 
 c.execute('SELECT * FROM geo')
