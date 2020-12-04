@@ -42,7 +42,7 @@ class Geo(Resource):
 
     def authVerify(self, auth):
         conn, c = self.dbConnect()
-        token = jwt.encode(dict(auth), 'secret', algorithm='HS256').decode("utf-8")
+        token = jwt.encode(dict(auth), key='secret', algorithm='HS256').decode("utf-8")
         c.execute('SELECT * FROM auth WHERE token=?', (token,))
         if c.fetchall():
             return True
