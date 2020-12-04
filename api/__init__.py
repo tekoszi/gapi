@@ -69,13 +69,13 @@ class Geo(Resource):
                 c.execute('INSERT INTO geo VALUES (?,?,?)', geoData)
                 conn.commit()
 
-                return {'message': 'Successfully added new automatic data', 'data': args}
+                return {'message': 'Successfully added new automatic data', 'data': geoData}
             else:
                 updateData = (ipGeoData['country_name'], ipGeoData['country_code'], args['ip'])
                 c.execute("UPDATE geo SET location=?, symbol=? WHERE ip=?", updateData)
                 conn.commit()
 
-                return {'message': 'Successfully updated the record with automatic data', 'data': args}
+                return {'message': 'Successfully updated the record with automatic data', 'data': updateData}
 
 
 api.add_resource(Geo, '/geo')
