@@ -18,7 +18,6 @@ def index():
         return markdown.markdown(content)
 
 
-
 class Geo(Resource):
     def getIpGeo(self, ip):
         url = f"http://api.ipstack.com/{ip}?access_key={os.environ['apikey']}"
@@ -77,5 +76,17 @@ class Geo(Resource):
 
                 return {'message': 'Successfully updated the record with automatic data', 'data': updateData}
 
+
+    def delete(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('ip', required=True)
+        args = parser.parse_args()
+        conn, c = self.dbConnect()
+        c.execute('DELETE * FROM geo WHERE ip=?', (args['ip'],))
+        conn.commit()
+        return {'message': 'Successfully removed row', 'data': args['ip']}
+
+class IpAddress(Resource):
+    ...
 
 api.add_resource(Geo, '/geo')
