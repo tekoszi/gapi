@@ -24,7 +24,7 @@ def create():
 @app.route("/read")
 def read():
 
-    return 'add Hello World'
+    return os.environ['apikey']
 
 @app.route("/update")
 def update():
