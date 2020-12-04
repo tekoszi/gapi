@@ -23,7 +23,7 @@ def index():
 def token():
     conn = sqlite3.connect('database.db')
     c = conn.cursor()
-    c.execute('SELECT * FROM geo WHERE token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkb21pbmlrIjoicGFzc3dvcmQifQ.qq5UOReD2zE3p3f5LDwdjedmhqGMPQb-na0c-bWLjGo')
+    c.execute('SELECT * FROM auth WHERE token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkb21pbmlrIjoicGFzc3dvcmQifQ.qq5UOReD2zE3p3f5LDwdjedmhqGMPQb-na0c-bWLjGo')
     return c.fetchall()
 
 class Geo(Resource):
@@ -43,7 +43,7 @@ class Geo(Resource):
     def authVerify(self, auth):
         conn, c = self.dbConnect()
         token = jwt.encode(auth, 'secret', algorithm='HS256').decode("utf-8")
-        c.execute('SELECT * FROM geo WHERE token=?', (token,))
+        c.execute('SELECT * FROM auth WHERE token=?', (token,))
         if c.fetchall():
             return True
         else:
