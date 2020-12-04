@@ -54,7 +54,7 @@ class Geo(Resource):
         conn = sqlite3.connect('database.db')
         c = conn.cursor()
         geoData = (args['ip'], args['location'], args['symbol'])
-        c.executemany('INSERT INTO geo VALUES (?,?,?)', geoData)
+        c.execute('INSERT INTO geo VALUES (?,?,?)', geoData)
         return args
 
 api.add_resource(Geo,'/geo')
