@@ -14,7 +14,9 @@ api = Api(app)
 def index():
     with open(os.path.dirname(app.root_path) + '/README.md', 'r') as file:
         content = file.read()
+
         return markdown.markdown(content)
+
 
 
 class Geo(Resource):
@@ -24,13 +26,11 @@ class Geo(Resource):
 
         return response
 
-
     def dbConnect(self):
         conn = sqlite3.connect('database.db')
         c = conn.cursor()
 
         return (conn, c)
-
 
     def get(self):
         conn = sqlite3.connect('database.db')
@@ -38,7 +38,6 @@ class Geo(Resource):
         c.execute("SELECT * FROM geo")
 
         return {'message': 'Success', 'data': c.fetchall()}
-
 
     def post(self):
         parser = reqparse.RequestParser()
@@ -56,14 +55,13 @@ class Geo(Resource):
                 geoData = (args['ip'], args['location'], args['symbol'])
                 c.execute('INSERT INTO geo VALUES (?,?,?)', geoData)
                 conn.commit()
-
                 return {'message': 'Successfully added new manual data', 'data': args}
             else:
                 updateData = (args['location'], args['symbol'], args['ip'])
                 c.execute("UPDATE geo SET location=?, symbol=? WHERE ip=?", updateData)
                 conn.commit()
-
                 return {'message': 'Successfully updated the record with manual data', 'data': args}
+
         elif args['method'] == 'auto':
             ipGeoData = self.getIpGeo(args['ip'])
             if not c.fetchall():
