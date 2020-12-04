@@ -139,3 +139,4 @@ class IpAddress(Resource):
             return {'message': 'Failure', 'data': 'Unauthorized'}
 
 api.add_resource(Geo, '/geo')
+api.add_resource(IpAddress, '/ip/<string:identifier>')
