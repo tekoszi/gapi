@@ -1,10 +1,9 @@
 import requests
 import json
 
-def getIpGeo(*args):
-    print(*args)
-    print(args)
+def getIpGeo(**kwargs):
+    print(kwargs)
 
 
 
-print(getIpGeo('134.201.250.155'))
+print(getIpGeo(key='134.201.250.155'))
