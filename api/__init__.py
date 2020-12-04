@@ -123,8 +123,8 @@ class Geo(Resource):
 
 class IpAddress(Geo, Resource):
     def get(self, *args):
-        tab = args
-        return tab
+        tabs = args
+        return tabs
         # parser = reqparse.RequestParser()
         # parser.add_argument('auth', required=True)
         # arguments = parser.parse_args()
