@@ -139,5 +139,19 @@ class IpAddress(Geo, Resource):
 
             return {'message': 'Failure', 'data': 'Unauthorized'}
 
+    def delete(self,  **kwargs):
+        parser = reqparse.RequestParser()
+        parser.add_argument('auth', required=True)
+        args = parser.parse_args()
+        if self.authVerify(args['auth']):
+            conn, c = self.dbConnect()
+            c.execute('DELETE FROM geo WHERE ip=?', (kwargs['identifier'],))
+            conn.commit()
+
+            return {'message': 'Successfully removed row', 'data': kwargs['identifier']}
+        else:
+
+            return {'message': 'Failure', 'data': 'Unauthorized'}
+
 api.add_resource(Geo, '/geo')
 api.add_resource(IpAddress, '/ip/<string:identifier>')
