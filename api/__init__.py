@@ -44,7 +44,7 @@ class Geo(Resource):
 
             return False
 
-    def get(self):
+    def get(self, identifier):
         parser = reqparse.RequestParser()
         parser.add_argument('auth', required=True)
         args = parser.parse_args()
@@ -65,8 +65,8 @@ class Geo(Resource):
         parser.add_argument('method', required=True)
         parser.add_argument('auth', required=True)
         args = parser.parse_args()
-        if self.authVerify(args['auth']):
-            conn, c = self.dbConnect()
+        if super().authVerify(args['auth']):
+            conn, c = super().dbConnect()
             c.execute('SELECT * FROM geo WHERE ip=?', (args['ip'],))
 
             if args['method'] == 'manual':
@@ -121,7 +121,7 @@ class Geo(Resource):
 
             return {'message': 'Failure', 'data': 'Unauthorized'}
 
-class IpAddress(Resource):
+class IpAddress(Geo, Resource):
     def get(self, identifier):
         parser = reqparse.RequestParser()
         parser.add_argument('auth', required=True)
