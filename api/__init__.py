@@ -19,13 +19,6 @@ def index():
         return markdown.markdown(content)
 
 
-@app.route("/token")
-def token():
-    parser = reqparse.RequestParser()
-    parser.add_argument('auth', required=True)
-    args = parser.parse_args()
-    return str(args['auth'])
-
 class Geo(Resource):
     def getIpGeo(self, ip):
         url = f"http://api.ipstack.com/{ip}?access_key={os.environ['apikey']}"
@@ -112,6 +105,7 @@ class Geo(Resource):
     def delete(self):
         parser = reqparse.RequestParser()
         parser.add_argument('ip', required=True)
+        parser.add_argument('auth', required=True)
         args = parser.parse_args()
         if self.authVerify(args['auth']):
             conn, c = self.dbConnect()
