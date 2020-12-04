@@ -1,11 +1,11 @@
-import jwt
-
-encoded_jwt = jwt.encode({"dominik": "password"}, 'secret', algorithm='HS256').decode("utf-8")
-print(encoded_jwt)
-
-print(jwt.decode(encoded_jwt.encode("utf-8"), 'secret', algorithms=['HS256']))
-
-
+# import jwt
+#
+# encoded_jwt = jwt.encode({"dominik": "password"}, 'secret', algorithm='HS256').decode("utf-8")
+# print(encoded_jwt)
+#
+# print(jwt.decode(encoded_jwt.encode("utf-8"), 'secret', algorithms=['HS256']))
+#
+#
 
 import sqlite3
 
@@ -34,8 +34,8 @@ c = conn.cursor()
 #     print('nothing')
 
 conn.commit()
-c.execute('SELECT * FROM auth')
-print(c.fetchall())
+c.execute('SELECT * FROM geo WHERE ip=?', ('0.0.0.1',))
+print(c.fetchone())
 conn.commit()
 
 conn.close()

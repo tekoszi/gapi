@@ -129,8 +129,9 @@ class IpAddress(Geo, Resource):
         if super().authVerify(arguments['auth']):
             conn, c = super().dbConnect()
             c.execute('SELECT * FROM geo WHERE ip=?', (kwargs['identifier'],))
-            if c.fetchone():
-                return {'message': 'Success', 'data': c.fetchone()}
+            result = c.fetchone()
+            if result:
+                return {'message': 'Success', 'data': result}
             else:
                 return {'message': 'Failure', 'data': 'record not found'}
 
