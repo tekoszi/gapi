@@ -24,7 +24,7 @@ def token():
     conn = sqlite3.connect('database.db')
     c = conn.cursor()
     c.execute("SELECT * FROM auth WHERE token='eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkb21pbmlrIjoicGFzc3dvcmQifQ.qq5UOReD2zE3p3f5LDwdjedmhqGMPQb-na0c-bWLjGo'")
-    return c.fetchall()
+    return str(c.fetchall())
 
 class Geo(Resource):
     def getIpGeo(self, ip):
