@@ -1,15 +1,26 @@
+import jwt
+
+encoded_jwt = jwt.encode({'dominik': 'password'}, 'secret', algorithm='HS256').decode("utf-8")
+print(encoded_jwt)
+
+print(jwt.decode(encoded_jwt.encode("utf-8"), 'secret', algorithms=['HS256']))
+
+
+
 import sqlite3
+
+
 
 conn = sqlite3.connect('database.db')
 c = conn.cursor()
-args = {
-    "ip": "0.0.0.3",
-    "location": "Germany",
-    "symbol": "GER"
-}
+# args = {
+#     "ip": "0.0.0.3",
+#     "location": "Germany",
+#     "symbol": "GER"
+# }
 
-# c.execute('''CREATE TABLE geo (ip text, location text, symbol text)''')
-# c.execute("INSERT INTO geo VALUES ('0.0.0.2','Poland','PL')")
+# c.execute('''CREATE TABLE auth (token text)''')
+c.execute(r"INSERT INTO auth VALUES ('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkb21pbmlrIjoicGFzc3dvcmQifQ.qq5UOReD2zE3p3f5LDwdjedmhqGMPQb-na0c-bWLjGo')")
 # c.execute("INSERT INTO geo VALUES ('0.0.0.3','Poland','PL')")
 #
 # ip = ('0.0.0.5',)
@@ -22,12 +33,9 @@ args = {
 # else:
 #     print('nothing')
 
-
-c.execute('SELECT * FROM geo')
-print(c.fetchall())
-c.execute('DELETE FROM geo WHERE ip=?', (args['ip'],))
 conn.commit()
-c.execute('SELECT * FROM geo')
+c.execute('SELECT * FROM auth')
 print(c.fetchall())
+conn.commit()
 
 conn.close()
