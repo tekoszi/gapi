@@ -17,31 +17,13 @@ def index():
         return markdown.markdown(content)
 
 
-@app.route("/create")
-def create():
-    return 'add Hello World'
-
-
-@app.route("/read")
-def read():
-    return os.environ['apikey']
-
-
-@app.route("/update")
-def update():
-    return 'add Hello World'
-
-
-@app.route("/delete")
-def delete():
-    return 'add Hello World'
-
-
 class Geo(Resource):
     def getIpGeo(self, ip):
         url = f"http://api.ipstack.com/{ip}?access_key={os.environ['apikey']}"
         response = requests.request("GET", url)
+
         return response
+
 
     def dbConnect(self):
         conn = sqlite3.connect('database.db')
@@ -49,11 +31,14 @@ class Geo(Resource):
 
         return (conn, c)
 
+
     def get(self):
         conn = sqlite3.connect('database.db')
         c = conn.cursor()
         c.execute("SELECT * FROM geo")
+
         return {'message': 'Success', 'data': c.fetchall()}
+
 
     def post(self):
         parser = reqparse.RequestParser()
@@ -71,11 +56,13 @@ class Geo(Resource):
                 geoData = (args['ip'], args['location'], args['symbol'])
                 c.execute('INSERT INTO geo VALUES (?,?,?)', geoData)
                 conn.commit()
+
                 return {'message': 'Successfully added new manual data', 'data': args}
             else:
                 updateData = (args['location'], args['symbol'], args['ip'])
                 c.execute("UPDATE geo SET location=?, symbol=? WHERE ip=?", updateData)
                 conn.commit()
+
                 return {'message': 'Successfully updated the record with manual data', 'data': args}
         elif args['method'] == 'auto':
             ipGeoData = self.getIpGeo(args['ip'])
@@ -83,11 +70,13 @@ class Geo(Resource):
                 geoData = (args['ip'], ipGeoData['country_name'], ipGeoData['country_code'])
                 c.execute('INSERT INTO geo VALUES (?,?,?)', geoData)
                 conn.commit()
+
                 return {'message': 'Successfully added new automatic data', 'data': args}
             else:
                 updateData = (ipGeoData['country_name'], ipGeoData['country_code'], args['ip'])
                 c.execute("UPDATE geo SET location=?, symbol=? WHERE ip=?", updateData)
                 conn.commit()
+
                 return {'message': 'Successfully updated the record with automatic data', 'data': args}
 
 
