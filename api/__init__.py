@@ -62,13 +62,16 @@ class Geo(Resource):
                 return {'message': 'Successfully updated the record with manual data', 'data': args}
 
         elif args['method'] == 'auto':
-            ipGeoData = self.getIpGeo(args['ip'])
+            try:
+                ipGeoData = self.getIpGeo(args['ip'])
+            except Exception:
+                return {'message': 'The was a connection error to ipstack.com', 'data': []}
+
             if not c.fetchall():
                 geoData = (args['ip'], ipGeoData['country_name'], ipGeoData['country_code'])
                 c.execute('INSERT INTO geo VALUES (?,?,?)', geoData)
                 conn.commit()
 
-                return {'message': 'Successfully added new automatic data', 'data': geoData}
             else:
                 updateData = (ipGeoData['country_name'], ipGeoData['country_code'], args['ip'])
                 c.execute("UPDATE geo SET location=?, symbol=? WHERE ip=?", updateData)
