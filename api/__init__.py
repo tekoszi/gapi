@@ -24,7 +24,7 @@ class Geo(Resource):
         url = f"http://api.ipstack.com/{ip}?access_key={os.environ['apikey']}"
         response = requests.request("GET", url)
 
-        return response
+        return json.loads(response.text)
 
     def dbConnect(self):
         conn = sqlite3.connect('database.db')
@@ -42,8 +42,8 @@ class Geo(Resource):
     def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument('ip', required=True)
-        parser.add_argument('location', required=True)
-        parser.add_argument('symbol', required=True)
+        parser.add_argument('location')
+        parser.add_argument('symbol')
         parser.add_argument('method', required=True)
         args = parser.parse_args()
 
