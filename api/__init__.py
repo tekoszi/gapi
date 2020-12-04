@@ -21,10 +21,10 @@ def index():
 
 @app.route("/token")
 def token():
-    conn = sqlite3.connect('database.db')
-    c = conn.cursor()
-    c.execute("SELECT * FROM auth WHERE token='eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkb21pbmlrIjoicGFzc3dvcmQifQ.qq5UOReD2zE3p3f5LDwdjedmhqGMPQb-na0c-bWLjGo'")
-    return str(c.fetchall())
+    parser = reqparse.RequestParser()
+    parser.add_argument('auth', required=True)
+    args = parser.parse_args()
+    return str(args['auth'])
 
 class Geo(Resource):
     def getIpGeo(self, ip):
