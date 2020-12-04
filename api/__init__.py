@@ -53,7 +53,7 @@ class Geo(Resource):
         c = conn.cursor()
         ip = (args['ip'],)
         c.execute('SELECT * FROM geo WHERE ip=?', ip)
-        if c.fetchall():
+        if not c.fetchall():
             geoData = (args['ip'], args['location'], args['symbol'])
             c.execute('INSERT INTO geo VALUES (?,?,?)', geoData)
             conn.commit()
