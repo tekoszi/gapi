@@ -55,6 +55,7 @@ class Geo(Resource):
         c = conn.cursor()
         geoData = (args['ip'], args['location'], args['symbol'])
         c.execute('INSERT INTO geo VALUES (?,?,?)', geoData)
+        conn.commit()
         return args
 
 api.add_resource(Geo,'/geo')
