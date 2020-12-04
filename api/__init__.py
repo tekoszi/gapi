@@ -8,8 +8,6 @@ app = Flask(__name__)
 api = Api(app)
 
 
-
-
 @app.route("/")
 def index():
     with open(os.path.dirname(app.root_path) +'/README.md', 'r') as file:
@@ -56,7 +54,7 @@ class Geo(Resource):
         geoData = (args['ip'], args['location'], args['symbol'])
         c.execute('INSERT INTO geo VALUES (?,?,?)', geoData)
         conn.commit()
-        return args
+        return {'message': 'Success', 'data': args}
 
 api.add_resource(Geo,'/geo')
 
