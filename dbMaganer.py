@@ -20,7 +20,6 @@ c = conn.cursor()
 # }
 
 # c.execute('''CREATE TABLE auth (token text)''')
-# c.execute(r"INSERT INTO auth VALUES ('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkb21pbmlrIjoicGFzc3dvcmQifQ.qq5UOReD2zE3p3f5LDwdjedmhqGMPQb-na0c-bWLjGo')")
 # c.execute("INSERT INTO geo VALUES ('0.0.0.3','Poland','PL')")
 #
 # ip = ('0.0.0.5',)
