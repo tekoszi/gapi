@@ -51,9 +51,10 @@ class Geo(Resource):
         parser.add_argument('location', required=True)
         parser.add_argument('symbol', required=True)
         args = parser.parse_args()
-        # conn = sqlite3.connect('database.db')
-        # c = conn.cursor()
-        # c.execute("INSERT INTO geo VALUES ('0.0.0.1','Poland','PL')")
+        conn = sqlite3.connect('database.db')
+        c = conn.cursor()
+        geoData = (args['ip'], args['location'], args['symbol'])
+        c.executemany('INSERT INTO geo VALUES (?,?,?)', geoData)
         return args
 
 api.add_resource(Geo,'/geo')
