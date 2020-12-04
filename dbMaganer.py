@@ -1,12 +1,3 @@
-# import jwt
-#
-# encoded_jwt = jwt.encode({"dominik": "password"}, 'secret', algorithm='HS256').decode("utf-8")
-# print(encoded_jwt)
-#
-# print(jwt.decode(encoded_jwt.encode("utf-8"), 'secret', algorithms=['HS256']))
-#
-#
-
 import sqlite3
 
 
