@@ -2,9 +2,9 @@
 This api enables you to add, delete or provide geo-location data on the base of ip address or URL.<br>
 I have build a postman collection which enables you to verify all the queries, it is available here: https://www.getpostman.com/collections/6e591fc1fbde3cccbf20
 
-###Avaiable Endpoints:
-#/geo
-####Available queries:
+###Avaiable Endpoints:<br>
+#/geo<br>
+####Available queries:<br>
 GET with param:
 ```json
  {
@@ -88,8 +88,8 @@ example responses:
 }
 ```
 #
-#/ipAddres
-####Available queries:
+#/ipAddres<br>
+####Available queries:<br>
 GET with param:
 ```json
  {
