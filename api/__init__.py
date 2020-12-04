@@ -1,14 +1,12 @@
 from flask import Flask
 import os
 import markdown
-from flask_restful import Resource, Api
+from flask_restful import Resource, Api, reqparse
 import sqlite3
 
 app = Flask(__name__)
 api = Api(app)
 
-conn = sqlite3.connect('database.db')
-c = conn.cursor()
 
 
 
@@ -43,8 +41,20 @@ def delete():
 
 class Geo(Resource):
     def get(self):
+        conn = sqlite3.connect('database.db')
+        c = conn.cursor()
         c.execute("SELECT * FROM geo")
         return {'message': 'Success', 'data': c.fetchall()}
+    def post(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('ip', required=True)
+        parser.add_argument('location', required=True)
+        parser.add_argument('symbol', required=True)
+        args = parser.parse_args()
+        # conn = sqlite3.connect('database.db')
+        # c = conn.cursor()
+        # c.execute("INSERT INTO geo VALUES ('0.0.0.1','Poland','PL')")
+        return args
 
 api.add_resource(Geo,'/geo')
 
