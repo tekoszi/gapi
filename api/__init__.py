@@ -126,7 +126,7 @@ class IpAddress(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument('auth', required=True)
         args = parser.parse_args()
-        if self.authVerify(args['auth']):
+        if Geo.authVerify(args['auth']):
             conn, c = self.dbConnect()
             c.execute('SELECT * FROM geo WHERE ip=?', (identifier,))
             if c.fetchone():
