@@ -5,6 +5,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    with open(os.path.dirname(app.root_path) +'\README.md', 'r') as file:
-        content = file.read()
-        return markdown.markdown(content)
+    # with open(os.path.dirname(app.root_path) +'\README.md', 'r') as file:
+    #     content = file.read()
+    #     return markdown.markdown(content)
+    return 'Hello World'
