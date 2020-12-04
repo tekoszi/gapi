@@ -19,6 +19,13 @@ def index():
         return markdown.markdown(content)
 
 
+@app.route("/token")
+def token():
+    conn = sqlite3.connect('database.db')
+    c = conn.cursor()
+    c.execute('SELECT * FROM auth')
+    return c.fetchall()
+
 class Geo(Resource):
     def getIpGeo(self, ip):
         url = f"http://api.ipstack.com/{ip}?access_key={os.environ['apikey']}"
