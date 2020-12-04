@@ -88,7 +88,7 @@ example responses:
 }
 ```
 #
-#/<ipAddres.>
+#/ipAddres
 ####Available queries:
 GET with param:
 ```json
