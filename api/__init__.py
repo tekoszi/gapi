@@ -51,10 +51,17 @@ class Geo(Resource):
         args = parser.parse_args()
         conn = sqlite3.connect('database.db')
         c = conn.cursor()
-        geoData = (args['ip'], args['location'], args['symbol'])
-        c.execute('INSERT INTO geo VALUES (?,?,?)', geoData)
-        conn.commit()
-        return {'message': 'Success', 'data': args}
+        ip = (args['ip'],)
+        c.execute('SELECT * FROM geo WHERE ip=?', ip)
+        if len(c.fetchall()) == 0:
+            geoData = (args['ip'], args['location'], args['symbol'])
+            c.execute('INSERT INTO geo VALUES (?,?,?)', geoData)
+            conn.commit()
+        else:
+            updateData = (args['location'], args['symbol'], args['ip'])
+            c.execute("UPDATE geo SET location=?, symbol=? WHERE ip=?", updateData)
+            conn.commit()
+        return {'message': 'Successfully added new data', 'data': args}
 
 api.add_resource(Geo,'/geo')
 
