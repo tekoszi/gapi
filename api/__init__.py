@@ -122,23 +122,21 @@ class Geo(Resource):
             return {'message': 'Failure', 'data': 'Unauthorized'}
 
 class IpAddress(Geo, Resource):
-    def get(self, *args):
-        tabs = args
-        return tabs
-        # parser = reqparse.RequestParser()
-        # parser.add_argument('auth', required=True)
-        # arguments = parser.parse_args()
-        # if super().authVerify(arguments['auth']):
-        #     conn, c = super().dbConnect()
-        #     c.execute('SELECT * FROM geo WHERE ip=?', (*args,))
-        #     if c.fetchone():
-        #         return {'message': 'Success', 'data': c.fetchone()}
-        #     else:
-        #         return {'message': 'Failure', 'data': 'record not found'}
-        #
-        # else:
-        #
-        #     return {'message': 'Failure', 'data': 'Unauthorized'}
+    def get(self,  *args):
+        parser = reqparse.RequestParser()
+        parser.add_argument('auth', required=True)
+        arguments = parser.parse_args()
+        if super().authVerify(arguments['auth']):
+            conn, c = super().dbConnect()
+            c.execute('SELECT * FROM geo WHERE ip=?', (*args,))
+            if c.fetchone():
+                return {'message': 'Success', 'data': c.fetchone()}
+            else:
+                return {'message': 'Failure', 'data': 'record not found'}
+
+        else:
+
+            return {'message': 'Failure', 'data': 'Unauthorized'}
 
 api.add_resource(Geo, '/geo')
-api.add_resource(IpAddress, '/ip/<string:*args>')
+api.add_resource(IpAddress, '/ip/<string:identifier>')
